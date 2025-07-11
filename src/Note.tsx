@@ -3,7 +3,6 @@ import { Row, Col, Stack, Badge, Button } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom"
 import ReactMarkdown from "react-markdown"
 
-
 type NoteProps = {
   onDelete: (id: string) => void
 }
@@ -13,41 +12,52 @@ export function Note({ onDelete }: NoteProps) {
   const navigate = useNavigate()
 
   return (
-    <>
+    <div className="note-detail">
       <Row className="align-items-center mb-4">
         <Col>
-          <h1>{note.title}</h1>
-          {note.tags.length > 0 && (
-            <Stack gap={1} direction="horizontal" className="flex-wrap">
-              {note.tags.map(tag => (
-                <Badge className="text-truncate" key={tag.id}>
-                  {tag.label}
-                </Badge>
-              ))}
-            </Stack>
-          )}
+          <h1 className="display-4">{note.title}</h1>
+          <div className="tags-container mt-2 mb-3">
+            {note.tags.map(tag => (
+              <span key={tag.id} className="badge bg-primary me-2">
+                {tag.label}
+              </span>
+            ))}
+          </div>
         </Col>
         <Col xs="auto">
-          <Stack gap={2} direction="horizontal">
-            <Link to={`/${note.id}/edit`}>
-              <Button variant="primary">Edit</Button>
-            </Link>
+          <Stack gap={2} direction="horizontal" className="stack-responsive">
+            <Button 
+              variant="primary" 
+              as={Link as any} 
+              to={`/${note.id}/edit`}
+              className="action-btn"
+            >
+              Edit
+            </Button>
             <Button
+              variant="outline-danger"
               onClick={() => {
                 onDelete(note.id)
                 navigate("/")
               }}
-              variant="outline-danger"
+              className="action-btn"
             >
               Delete
             </Button>
-            <Link to="/">
-              <Button variant="outline-secondary">Back</Button>
-            </Link>
+            <Button 
+              variant="outline-secondary" 
+              as={Link as any} 
+              to="/"
+              className="action-btn"
+            >
+              Back
+            </Button>
           </Stack>
         </Col>
       </Row>
-      <ReactMarkdown>{note.markdown}</ReactMarkdown>
-    </>
+      <div className="markdown-content p-3 bg-white rounded">
+        <ReactMarkdown>{note.markdown}</ReactMarkdown>
+      </div>
+    </div>
   )
 }

@@ -3,7 +3,7 @@
     "target": "ESNext",
     "module": "ESNext",
     "strict": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "moduleResolution": "bundler",
     "skipLibCheck": true,
     "esModuleInterop": true,
@@ -13,6 +13,6 @@
       "@/*": ["./src/*"]
     }
   },
-  "include": ["src"],
+  "include": ["src", "src/auth/.tsx"],
   "exclude": ["node_modules"]
 }

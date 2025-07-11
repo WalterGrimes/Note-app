@@ -1,11 +1,9 @@
-import { Row, Col, Stack, Button, Form, Badge, Modal } from "react-bootstrap"
+import { Row, Col, Stack, Button, Form, Modal } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import CreatableSelect from "react-select/creatable"
-import { Tag } from "./App"
-import { useMemo, useState } from "react"
-import s from "./NoteList.module.css"
+import { Tag } from "@/App"
 import { Card } from "react-bootstrap"
-
+import { useState, useMemo } from "react"
 
 type SimplifiedNote = {
   tags: Tag[]
@@ -13,14 +11,12 @@ type SimplifiedNote = {
   id: string
 }
 
-
 type NoteListProps = {
   availableTags: Tag[]
   notes: SimplifiedNote[]
   onUpdateTag: (id: string, label: string) => void
   onDeleteTag: (id: string) => void
 }
-
 
 type EditTagsModalProps = {
   show: boolean
@@ -36,59 +32,55 @@ export function NoteList({
   onUpdateTag,
   onDeleteTag,
 }: NoteListProps) {
-
-  const [selectedTags, setSelectedTags] = useState<Tag[]>([])
-  const [title, setTitle] = useState("")
   const [editTagsModalIsOpen, setEditTagsModalIsOpen] = useState(false)
+  const [title, setTitle] = useState("")
+  const [selectedTags, setSelectedTags] = useState<Tag[]>([])
 
-  
-  const filteredNotes = useMemo(() => {
-    return notes.filter(note => {
-      const titleMatch = title === "" || 
-        note.title.toLowerCase().includes(title.toLowerCase())
-      const tagsMatch = selectedTags.every(tag =>
-        note.tags.some(noteTag => noteTag.id === tag.id)
-      )
-      return titleMatch && tagsMatch
-    })
-  }, [title, selectedTags, notes])
+ const filteredNotes = useMemo(() => {
+  return notes.filter(note => {
+    return (
+      (title === "" ||
+        note.title.toLowerCase().includes(title.toLowerCase())) &&
+      (selectedTags.length === 0 ||
+        selectedTags.every(tag =>
+          note.tags.some(noteTag => noteTag.id === tag.id)
+        ))
+    )
+  })
+}, [title, selectedTags, notes])
+
 
   return (
-    <>
-    
-      <Row className="align-items-center mb-4">
-        <Col>
-          <h1>Notes</h1>
-        </Col>
-        <Col xs="auto">
-          <Stack gap={2} direction="horizontal">
-            <Link to="/new">
-              <Button variant="primary">Create</Button>
-            </Link>
-            <Button
-              onClick={() => setEditTagsModalIsOpen(true)}
-              variant="outline-secondary"
-            >
-              Edit Tags
-            </Button>
-          </Stack>
-        </Col>
-      </Row>
+    <div className="container py-4">
+      <div className="d-flex justify-content-between align-items-center mb-4">
+        <h1>Notes</h1>
+        <div className="d-flex gap-2">
+          <Link to="/new">
+            <Button variant="primary">Create</Button>
+          </Link>
+          <Button
+            variant="outline-secondary"
+            onClick={() => setEditTagsModalIsOpen(true)}
+          >
+            Edit Tags
+          </Button>
+        </div>
+      </div>
 
-      
-      <Form>
-        <Row className="mb-4">
-          <Col>
+      <Form className="mb-4">
+        <Row>
+          <Col md={6}>
             <Form.Group controlId="title">
               <Form.Label>Title</Form.Label>
               <Form.Control
                 type="text"
                 value={title}
                 onChange={e => setTitle(e.target.value)}
+                placeholder="Search by title..."
               />
             </Form.Group>
           </Col>
-          <Col>
+          <Col md={6}>
             <Form.Group controlId="tags">
               <Form.Label>Tags</Form.Label>
               <CreatableSelect
@@ -109,14 +101,16 @@ export function NoteList({
                     }))
                   )
                 }}
+                className="react-select-container"
+                classNamePrefix="react-select"
+                placeholder="Filter by tags..."
               />
             </Form.Group>
           </Col>
         </Row>
       </Form>
 
-      
-      <Row xs={1} sm={2} lg={3} xl={4} className="g-3">
+      <Row xs={1} sm={2} lg={3} xl={4} className="g-4">
         {filteredNotes.map(note => (
           <Col key={note.id}>
             <NoteCard id={note.id} title={note.title} tags={note.tags} />
@@ -131,44 +125,35 @@ export function NoteList({
         onUpdateTag={onUpdateTag}
         onDeleteTag={onDeleteTag}
       />
-    </>
+    </div>
   )
 }
-
 
 function NoteCard({ id, title, tags }: SimplifiedNote) {
   return (
     <Card
-      as={Link}
+      as={Link as any}
       to={`/${id}`}
-      className={`h-100 text-reset text-decoration-none ${s.card}`}
+      className="h-100 text-reset text-decoration-none"
     >
       <Card.Body>
-        <Stack
-          gap={2}
-          className="align-items-center justify-content-center h-100"
-        >
-          <span className="fs-5">{title}</span>
-          {tags.length > 0 && (
-            <Stack
-              gap={1}
-              direction="horizontal"
-              className="justify-content-center flex-wrap"
-            >
-              {tags.map(tag => (
-                <Badge className="text-truncate" key={tag.id}>
-                  {tag.label}
-                </Badge>
-              ))}
-            </Stack>
-          )}
-        </Stack>
+        <Card.Title className="d-flex justify-content-between align-items-center">
+          <span className="fs-4">{title}</span>
+        </Card.Title>
+        {tags.length > 0 && (
+          <Stack gap={1} direction="horizontal" className="flex-wrap">
+            {tags.map(tag => (
+              <span key={tag.id} className="badge bg-primary">
+                {tag.label}
+              </span>
+            ))}
+          </Stack>
+        )}
       </Card.Body>
     </Card>
   )
 }
 
-    
 function EditTagsModal({
   availableTags,
   handleClose,
@@ -195,8 +180,8 @@ function EditTagsModal({
                 </Col>
                 <Col xs="auto">
                   <Button
-                    onClick={() => onDeleteTag(tag.id)}
                     variant="outline-danger"
+                    onClick={() => onDeleteTag(tag.id)}
                   >
                     &times;
                   </Button>
@@ -206,6 +191,11 @@ function EditTagsModal({
           </Stack>
         </Form>
       </Modal.Body>
+      <Modal.Footer>
+        <Button variant="secondary" onClick={handleClose}>
+          Close
+        </Button>
+      </Modal.Footer>
     </Modal>
   )
 }

@@ -5,10 +5,11 @@ import { Container } from "react-bootstrap"
 import { useMemo } from "react"
 import { useLocalStorage } from "./useLocalStorage"
 import { v4 as uuidV4 } from "uuid"
-import { NoteList } from "./NoteList"
+import { NoteList } from "./noteList/NoteList"
 import { NoteLayout } from "./NoteLayout"
 import { Note } from "./Note"
 import { EditNote } from "./EditNote"
+import Login from "./auth/Login"
 
 // Типы данных приложения
 export type Note = {
@@ -125,6 +126,14 @@ const App = () => {
               onSubmit={onCreateNote} 
               onAddTag={addTag} 
               availableTags={tags} 
+            />
+          } 
+        />
+
+         <Route 
+          path="/login" 
+          element={
+            <Login
             />
           } 
         />

@@ -1,0 +1,169 @@
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem;
+}
+
+.header {
+  margin-bottom: 2rem;
+}
+
+.title {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #2d3436;
+  margin-bottom: 0;
+}
+
+.card {
+  transition: all 0.2s ease-in-out;
+  border: none;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  height: 100%;
+  background-color: #fff;
+  overflow: hidden;
+}
+
+.card:hover,
+.card:focus {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  text-decoration: none;
+}
+
+.cardBody {
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  min-height: 150px;
+}
+
+.noteTitle {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #2d3436;
+  margin-bottom: 1rem;
+  text-align: center;
+  word-break: break-word;
+}
+
+.tag {
+  font-size: 0.8rem;
+  padding: 0.4em 0.8em;
+  border-radius: 50px;
+  background-color: #f1f2f6;
+  color: #57606f;
+  margin: 0.2rem;
+}
+
+.searchForm {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  margin-bottom: 2rem;
+}
+
+.formLabel {
+  font-weight: 600;
+  color: #57606f;
+  margin-bottom: 0.5rem;
+}
+
+.createButton {
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+  border-radius: 8px;
+  background-color: #4361ee;
+  border: none;
+}
+
+.createButton:hover {
+  background-color: #3a56d4;
+}
+
+.editTagsButton {
+  padding: 0.5rem 1.5rem;
+  font-weight: 500;
+  border-radius: 8px;
+  background-color: transparent;
+  border: 1px solid #ced4da;
+  color: #57606f;
+}
+
+.editTagsButton:hover {
+  background-color: #f8f9fa;
+  border-color: #adb5bd;
+}
+
+.modalContent {
+  border-radius: 12px;
+  border: none;
+}
+
+.modalHeader {
+  border-bottom: 1px solid #e9ecef;
+}
+
+.modalTitle {
+  font-weight: 600;
+  color: #2d3436;
+}
+
+.tagInput {
+  border-radius: 8px;
+  padding: 0.5rem 1rem;
+  border: 1px solid #ced4da;
+}
+
+.tagInput:focus {
+  border-color: #4361ee;
+  box-shadow: 0 0 0 0.25rem rgba(67, 97, 238, 0.25);
+}
+
+.deleteTagButton {
+  width: 38px;
+  height: 38px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1px solid #ff6b6b;
+  color: #ff6b6b;
+  background-color: transparent;
+}
+
+.deleteTagButton:hover {
+  background-color: #ff6b6b;
+  color: white;
+}
+
+/* Адаптивные стили */
+@media (max-width: 768px) {
+  .container {
+    padding: 1rem;
+  }
+  
+  .header {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  
+  .title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+  
+  .buttonGroup {
+    width: 100%;
+    justify-content: space-between;
+  }
+  
+  .createButton, 
+  .editTagsButton {
+    width: 48%;
+  }
+}
