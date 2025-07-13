@@ -13,7 +13,7 @@ import Login from "./auth/Login"
 import "./App.css"
 import { Header } from "./header/Header"
 import SoundButton from "./soundButtton/SoundButton"
-
+import Video from "./assets/audio/VideoMeme.mp4"
 
 export type Note = {
   id: string
@@ -110,7 +110,7 @@ const App = () => {
  return (
   <Container className="main-container my-4">
     <Header /> 
-    <SoundButton/>
+    <SoundButton videoSrc={Video}/>
 
     <Routes>
       <Route 

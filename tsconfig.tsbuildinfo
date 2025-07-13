@@ -1,0 +1,1 @@
+{"root":["./src/app.tsx","./src/editnote.tsx","./src/newnote.tsx","./src/note.tsx","./src/noteform.tsx","./src/notelayout.tsx","./src/sound.tsx","./src/main.tsx","./src/uselocalstorage.tsx","./src/vite-env.d.ts","./src/auth/login.tsx","./src/auth/secret.tsx","./src/header/header.tsx","./src/notelist/notelist.tsx","./src/soundbuttton/soundbutton.tsx"],"version":"5.8.3"}
