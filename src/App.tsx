@@ -11,8 +11,10 @@ import { Note } from "./Note"
 import { EditNote } from "./EditNote"
 import Login from "./auth/Login"
 import "./App.css"
+import { Header } from "./header/Header"
+import SoundButton from "./soundButtton/SoundButton"
 
-// Типы данных приложения
+
 export type Note = {
   id: string
 } & NoteData
@@ -105,58 +107,58 @@ const App = () => {
     })
   }
 
-  return (
-    <Container className="my-4">
-      <Routes>
-        <Route 
-          path="/" 
-          element={
-            <NoteList 
-              notes={notesWithTags} 
-              availableTags={tags} 
-              onUpdateTag={updateTag}
-              onDeleteTag={deleteTag}
-            />
-          } 
-        />
-        
-        <Route 
-          path="/new" 
-          element={
-            <NewNote 
-              onSubmit={onCreateNote} 
-              onAddTag={addTag} 
-              availableTags={tags} 
-            />
-          } 
-        />
+ return (
+  <Container className="main-container my-4">
+    <Header /> 
+    <SoundButton/>
 
-         <Route 
-          path="/login" 
+    <Routes>
+      <Route 
+        path="/" 
+        element={
+          <NoteList 
+            notes={notesWithTags} 
+            availableTags={tags} 
+            onUpdateTag={updateTag}
+            onDeleteTag={deleteTag}
+          />
+        } 
+      />
+      
+      <Route 
+        path="/new" 
+        element={
+          <NewNote 
+            onSubmit={onCreateNote} 
+            onAddTag={addTag} 
+            availableTags={tags} 
+          />
+        } 
+      />
+
+      <Route 
+        path="/login" 
+        element={<Login />} 
+      />
+
+      <Route path="/:id" element={<NoteLayout notes={notesWithTags} />}>
+        <Route index element={<Note onDelete={onDeleteNote} />} />
+        <Route 
+          path="edit" 
           element={
-            <Login
+            <EditNote 
+              onSubmit={onUpdateNote}
+              onAddTag={addTag} 
+              availableTags={tags}
             />
           } 
         />
-        
-        <Route path="/:id" element={<NoteLayout notes={notesWithTags} />}>
-          <Route index element={<Note onDelete={onDeleteNote} />} />
-          <Route 
-            path="edit" 
-            element={
-              <EditNote 
-                onSubmit={onUpdateNote}
-                onAddTag={addTag} 
-                availableTags={tags}
-              />
-            } 
-          />
-        </Route>
-        
-        <Route path="/*" element={<Navigate to="/" />} />
-      </Routes>
-    </Container>
-  )
+      </Route>
+      
+      <Route path="/*" element={<Navigate to="/" />} />
+    </Routes>
+  </Container>
+)
 }
 
 export default App

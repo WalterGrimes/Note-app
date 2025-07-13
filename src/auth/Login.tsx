@@ -1,5 +1,6 @@
 import { useState } from "react";
 import styles from "./Login.module.css";
+import Video from "../assets/audio/VideoMeme.mp4";
 
 export default function Login() {
   const [username, setUsername] = useState("");
@@ -9,7 +10,7 @@ export default function Login() {
   const handleLogin = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    if (username === "secretUser" && password === "secretPass") {
+    if (username === "Banan22" && password === "Banan22") {
       setSecret(true);
     } else {
       alert("Неверный логин или пароль");
@@ -20,12 +21,16 @@ export default function Login() {
     <div className={styles.container}>
       {secret ? (
         <div className={styles.secret}>
-          🎉 Вот твоя пасхалка! 💖 <br />
-          <span>Ты самая лучшая!</span>
+          <video
+            src={Video}
+            width="480"
+            controls
+            autoPlay
+          />
         </div>
       ) : (
         <form onSubmit={handleLogin} className={styles.form}>
-          <h2 className={styles.title}>Вход</h2>
+          <h2 className={styles.title}>Enter</h2>
           <input
             type="text"
             placeholder="Username"
@@ -41,7 +46,7 @@ export default function Login() {
             className={styles.input}
           />
           <button type="submit" className={styles.button}>
-            Войти
+            Enter
           </button>
         </form>
       )}
