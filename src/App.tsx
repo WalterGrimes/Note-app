@@ -10,6 +10,7 @@ import { NoteLayout } from "./NoteLayout"
 import { Note } from "./Note"
 import { EditNote } from "./EditNote"
 import Login from "./auth/Login"
+import "./App.css"
 
 // Типы данных приложения
 export type Note = {

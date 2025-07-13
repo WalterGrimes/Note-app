@@ -4,6 +4,7 @@ import { Link } from "react-router-dom"
 import { FormEvent, useRef, useState } from "react"
 import { v4 as uuidV4 } from "uuid"
 import { NoteData, Tag } from "./App"
+import "./App.css"
 
 type NoteFormProps = {
   onSubmit: (data: NoteData) => void
@@ -25,6 +26,7 @@ export function NoteForm({
 
   function handleSubmit(e: FormEvent) {
     e.preventDefault()
+    console.log("Form sumbitted")
 
     onSubmit({
       title: titleRef.current!.value,

@@ -4,6 +4,7 @@ import CreatableSelect from "react-select/creatable"
 import { Tag } from "@/App"
 import { Card } from "react-bootstrap"
 import { useState, useMemo } from "react"
+import styles from "./NoteList.module.css"
 
 type SimplifiedNote = {
   tags: Tag[]
@@ -36,30 +37,29 @@ export function NoteList({
   const [title, setTitle] = useState("")
   const [selectedTags, setSelectedTags] = useState<Tag[]>([])
 
- const filteredNotes = useMemo(() => {
-  return notes.filter(note => {
-    return (
-      (title === "" ||
-        note.title.toLowerCase().includes(title.toLowerCase())) &&
-      (selectedTags.length === 0 ||
-        selectedTags.every(tag =>
-          note.tags.some(noteTag => noteTag.id === tag.id)
-        ))
-    )
-  })
-}, [title, selectedTags, notes])
-
+  const filteredNotes = useMemo(() => {
+    return notes.filter(note => {
+      return (
+        (title === "" ||
+          note.title.toLowerCase().includes(title.toLowerCase())) &&
+        (selectedTags.length === 0 ||
+          selectedTags.every(tag =>
+            note.tags.some(noteTag => noteTag.id === tag.id)
+          ))
+      )
+    })
+  }, [title, selectedTags, notes])
 
   return (
-    <div className="container py-4">
-      <div className="d-flex justify-content-between align-items-center mb-4">
-        <h1>Notes</h1>
+    <div className={styles.container}>
+      <div className={`d-flex justify-content-between align-items-center mb-4 ${styles.header}`}>
+        <h1 className={styles.title}>Notes</h1>
         <div className="d-flex gap-2">
           <Link to="/new">
-            <Button variant="primary">Create</Button>
+            <Button className={styles.createButton}>Create</Button>
           </Link>
           <Button
-            variant="outline-secondary"
+            className={styles.editTagsButton}
             onClick={() => setEditTagsModalIsOpen(true)}
           >
             Edit Tags
@@ -67,11 +67,11 @@ export function NoteList({
         </div>
       </div>
 
-      <Form className="mb-4">
+      <Form className={styles.searchForm}>
         <Row>
           <Col md={6}>
             <Form.Group controlId="title">
-              <Form.Label>Title</Form.Label>
+              <Form.Label className={styles.formLabel}>Title</Form.Label>
               <Form.Control
                 type="text"
                 value={title}
@@ -82,7 +82,7 @@ export function NoteList({
           </Col>
           <Col md={6}>
             <Form.Group controlId="tags">
-              <Form.Label>Tags</Form.Label>
+              <Form.Label className={styles.formLabel}>Tags</Form.Label>
               <CreatableSelect
                 isMulti
                 options={availableTags.map(tag => ({
@@ -134,16 +134,14 @@ function NoteCard({ id, title, tags }: SimplifiedNote) {
     <Card
       as={Link as any}
       to={`/${id}`}
-      className="h-100 text-reset text-decoration-none"
+      className={`${styles.card} text-reset text-decoration-none`}
     >
-      <Card.Body>
-        <Card.Title className="d-flex justify-content-between align-items-center">
-          <span className="fs-4">{title}</span>
-        </Card.Title>
+      <Card.Body className={styles.cardBody}>
+        <Card.Title className={styles.noteTitle}>{title}</Card.Title>
         {tags.length > 0 && (
           <Stack gap={1} direction="horizontal" className="flex-wrap">
             {tags.map(tag => (
-              <span key={tag.id} className="badge bg-primary">
+              <span key={tag.id} className={styles.tag}>
                 {tag.label}
               </span>
             ))}
@@ -162,9 +160,9 @@ function EditTagsModal({
   onDeleteTag,
 }: EditTagsModalProps) {
   return (
-    <Modal show={show} onHide={handleClose}>
-      <Modal.Header closeButton>
-        <Modal.Title>Edit Tags</Modal.Title>
+    <Modal show={show} onHide={handleClose} dialogClassName={styles.modalContent}>
+      <Modal.Header closeButton className={styles.modalHeader}>
+        <Modal.Title className={styles.modalTitle}>Edit Tags</Modal.Title>
       </Modal.Header>
       <Modal.Body>
         <Form>
@@ -174,13 +172,14 @@ function EditTagsModal({
                 <Col>
                   <Form.Control
                     type="text"
+                    className={styles.tagInput}
                     value={tag.label}
                     onChange={e => onUpdateTag(tag.id, e.target.value)}
                   />
                 </Col>
                 <Col xs="auto">
                   <Button
-                    variant="outline-danger"
+                    className={styles.deleteTagButton}
                     onClick={() => onDeleteTag(tag.id)}
                   >
                     &times;

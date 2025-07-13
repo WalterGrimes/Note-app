@@ -16,6 +16,6 @@ export function NoteLayout({ notes }: NoteLayoutProps) {
 }
 
 // Кастомный хук для доступа к данным 
-export function usenote() {
+export function useNote() {
   return useOutletContext<Note>()
 }
