@@ -3,7 +3,7 @@ import CreatableSelect from 'react-select/creatable'
 import { Link } from "react-router-dom"
 import { FormEvent, useRef, useState } from "react"
 import { v4 as uuidV4 } from "uuid"
-import { NoteData, Tag } from "./App"
+import { NoteData, Tag } from "./types"
 import "./App.css"
 
 type NoteFormProps = {

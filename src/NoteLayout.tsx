@@ -1,21 +1,25 @@
-import { Navigate, Outlet, useOutletContext, useParams } from "react-router-dom"
-import { Note } from "./App"
+import { Outlet, useParams, Navigate, useOutletContext } from "react-router-dom"
+import { Note } from "@/types" // Обязательно: правильный импорт типа Note
+import { useMemo } from "react"
 
-   
+// Этот компонент находит нужную заметку по ID из параметра URL
 type NoteLayoutProps = {
-  notes: Note[]
+  notes: Note[] // Твои заметки с тегами
 }
 
 export function NoteLayout({ notes }: NoteLayoutProps) {
-  const { id } = useParams()
-  const note = notes.find(n => n.id === id)
+  const { id } = useParams<{ id: string }>()
+  
+  // Находим Note по id
+  const note = useMemo(() => notes.find(n => n.id === id), [id, notes])
 
-  if (!note) return <Navigate to="/" replace />
+  if (note == null) return <Navigate to="/" replace />
 
+  // Передаём Note в Outlet через контекст
   return <Outlet context={note} />
 }
 
-// Кастомный хук для доступа к данным 
+// ✅ Исправленный useNote, который возвращает Note, а не строку
 export function useNote() {
   return useOutletContext<Note>()
 }

@@ -13,8 +13,6 @@ import { EditNote } from "./EditNote";
 import Login from "./auth/Login";
 import "./App.css";
 import { Header } from "./header/Header";
-import SoundButton from "./soundButtton/SoundButton";
-import Video from "./assets/audio/VideoMeme.mp4";
 const App = () => {
     const [notes, setNotes] = useLocalStorage("NOTES", []);
     const [tags, setTags] = useLocalStorage("TAGS", []);

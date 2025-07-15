@@ -1,7 +1,7 @@
 import { Row, Col, Stack, Button, Form, Modal } from "react-bootstrap"
 import { Link } from "react-router-dom"
 import CreatableSelect from "react-select/creatable"
-import { Tag } from "@/App"
+import { Tag } from "../types"
 import { Card } from "react-bootstrap"
 import { useState, useMemo } from "react"
 import styles from "./NoteList.module.css"
